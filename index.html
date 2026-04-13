@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SysMoBench</title>
+  <title>SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -27,11 +27,11 @@
       letter-spacing: -0.5px;
     }
 
-    header p {
+    header .subtitle {
       font-size: 1.25rem;
       margin-top: 16px;
       color: #b0c4de;
-      max-width: 640px;
+      max-width: 700px;
       margin-left: auto;
       margin-right: auto;
     }
@@ -41,6 +41,7 @@
       justify-content: center;
       gap: 24px;
       margin-top: 32px;
+      flex-wrap: wrap;
     }
 
     nav a {
@@ -100,6 +101,87 @@
       font-size: 0.95rem;
     }
 
+    .systems {
+      margin-bottom: 60px;
+    }
+
+    .systems-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .system-tag {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 16px;
+      text-align: center;
+      font-size: 0.95rem;
+    }
+
+    .system-tag .category {
+      font-size: 0.75rem;
+      color: #888;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 4px;
+    }
+
+    .system-tag .name {
+      font-weight: 600;
+      color: #1a1a2e;
+    }
+
+    .pipeline {
+      margin-bottom: 60px;
+    }
+
+    .pipeline-steps {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .pipeline-step {
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 16px 20px;
+      text-align: center;
+      min-width: 140px;
+    }
+
+    .pipeline-step .step-num {
+      font-size: 0.75rem;
+      color: #0f3460;
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .pipeline-step .step-name {
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .pipeline-step .step-desc {
+      font-size: 0.8rem;
+      color: #666;
+      margin-top: 4px;
+    }
+
+    .pipeline-arrow {
+      color: #0f3460;
+      font-size: 1.2rem;
+      font-weight: bold;
+    }
+
     .cta {
       text-align: center;
       padding: 40px 20px;
@@ -114,6 +196,7 @@
       text-decoration: none;
       font-size: 1.05rem;
       transition: background 0.2s;
+      margin: 0 8px;
     }
 
     .cta a:hover {
@@ -133,11 +216,12 @@
 
 <header>
   <h1>SysMoBench</h1>
-  <p>A systematic benchmark for evaluating system-level modeling and simulation capabilities.</p>
+  <p class="subtitle">Evaluating AI on Formally Modeling Complex Real-World Systems</p>
   <nav>
     <a href="#about">About</a>
-    <a href="#features">Features</a>
-    <a href="https://github.com/Qian-Cheng-nju/SysMoBench-website" target="_blank">GitHub</a>
+    <a href="#evaluation">Evaluation</a>
+    <a href="#systems">Systems</a>
+    <a href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub</a>
   </nav>
 </header>
 
@@ -145,9 +229,11 @@
   <section id="about" style="margin-bottom: 60px;">
     <h2 class="section-title">About SysMoBench</h2>
     <p style="text-align: center; max-width: 720px; margin: 0 auto; color: #444;">
-      SysMoBench provides a comprehensive suite of benchmarks designed to evaluate and compare
-      system-level modeling approaches. Our goal is to establish standardized metrics and reproducible
-      evaluation methodologies for the community.
+      SysMoBench is a comprehensive benchmark for assessing AI's capacity to create formal
+      specifications of complex, real-world computing systems. While recent advances in generative AI
+      show promise in generating certain forms of specifications, existing work mostly targets small code,
+      not complete systems. SysMoBench bridges this gap by focusing on concurrent and distributed systems
+      using <strong>TLA+</strong>, the predominant specification language for these domains.
     </p>
   </section>
 
@@ -156,24 +242,95 @@
     <div class="features">
       <div class="card">
         <div class="icon">&#x1F4CA;</div>
-        <h3>Comprehensive Metrics</h3>
-        <p>Standardized evaluation metrics covering accuracy, efficiency, and scalability.</p>
+        <h3>Automated Evaluation</h3>
+        <p>Four-phase assessment pipeline: syntax validation, runtime analysis, behavioral conformance, and property verification.</p>
       </div>
       <div class="card">
         <div class="icon">&#x1F504;</div>
-        <h3>Reproducible</h3>
-        <p>Fully reproducible benchmarks with documented configurations and datasets.</p>
+        <h3>Real-World Systems</h3>
+        <p>Nine carefully selected artifacts spanning synchronization primitives, consensus protocols, and distributed replication.</p>
       </div>
       <div class="card">
         <div class="icon">&#x1F527;</div>
         <h3>Extensible</h3>
-        <p>Easy to add new benchmarks, models, and evaluation criteria.</p>
+        <p>Add new systems with only system code, trace instrumentation, and invariant templates &mdash; no reference models needed.</p>
+      </div>
+    </div>
+  </section>
+
+  <section id="evaluation" class="pipeline">
+    <h2 class="section-title">Evaluation Pipeline</h2>
+    <div class="pipeline-steps">
+      <div class="pipeline-step">
+        <div class="step-num">Phase 1</div>
+        <div class="step-name">Syntax</div>
+        <div class="step-desc">SANY parser validation</div>
+      </div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step">
+        <div class="step-num">Phase 2</div>
+        <div class="step-name">Runtime</div>
+        <div class="step-desc">TLC model checking</div>
+      </div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step">
+        <div class="step-num">Phase 3</div>
+        <div class="step-name">Conformance</div>
+        <div class="step-desc">Execution trace verification</div>
+      </div>
+      <div class="pipeline-arrow">&rarr;</div>
+      <div class="pipeline-step">
+        <div class="step-num">Phase 4</div>
+        <div class="step-name">Properties</div>
+        <div class="step-desc">Safety &amp; liveness checks</div>
+      </div>
+    </div>
+  </section>
+
+  <section id="systems" class="systems">
+    <h2 class="section-title">Benchmark Systems</h2>
+    <div class="systems-grid">
+      <div class="system-tag">
+        <div class="category">Synchronization</div>
+        <div class="name">Asterinas Spinlock</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Synchronization</div>
+        <div class="name">Asterinas Mutex</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Synchronization</div>
+        <div class="name">Asterinas Rwmutex</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Consensus</div>
+        <div class="name">Etcd Raft</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Consensus</div>
+        <div class="name">Redis Raft</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Consensus</div>
+        <div class="name">PGo Raftkvs</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Replication</div>
+        <div class="name">Xline CURP</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Distributed</div>
+        <div class="name">PGo Lock Server</div>
+      </div>
+      <div class="system-tag">
+        <div class="category">Distributed</div>
+        <div class="name">PGo Dist. Queue</div>
       </div>
     </div>
   </section>
 
   <div class="cta">
-    <a href="https://github.com/Qian-Cheng-nju/SysMoBench-website">Get Started &rarr;</a>
+    <a href="https://github.com/specula-org/SysMoBench">Get Started &rarr;</a>
   </div>
 </main>
 
