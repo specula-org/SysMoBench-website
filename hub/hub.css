@@ -427,9 +427,6 @@ pre.code .tok-c { color: var(--ink-3); font-style: italic; }
 .bibbox {
   position: relative;
 }
-.bibbox .copybtn {
-  position: absolute; top: 12px; right: 12px;
-}
 
 /* ---------- footer ---------- */
 footer.site-foot {

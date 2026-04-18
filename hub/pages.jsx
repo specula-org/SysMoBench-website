@@ -60,28 +60,19 @@ function CopyBibBtn() {
 
 // ============ HOME ============
 function PageHome({ go }) {
-  // Staggered, top-down cascade. Each section starts after the previous.
   return (
     <div>
       <section className="hero">
         <div className="wrap-narrow">
-          <FadeIn delay={50}>
+          <FadeIn>
             <div className="news-banner"><span className="dot" />Accepted at ICLR 2026</div>
-          </FadeIn>
-          <FadeIn delay={220}>
             <h1>How well can AI <em>formally model</em> real systems?</h1>
-          </FadeIn>
-          <FadeIn delay={420}>
             <p className="lead">A benchmark evaluating LLMs on generating TLA+ specifications for eleven real-world concurrent and distributed systems — from spinlocks to Raft.</p>
-          </FadeIn>
-          <FadeIn delay={620}>
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 28, flexWrap: "wrap" }}>
               <a className="btn accent" href="https://arxiv.org/abs/2509.23130" target="_blank">Read the Paper</a>
               <button className="btn primary" onClick={() => go("leaderboard")}>View Leaderboard</button>
               <a className="btn ghost" href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub ↗</a>
             </div>
-          </FadeIn>
-          <FadeIn delay={820}>
             <div className="stats">
               <div><span className="big"><CountUp to={11} /></span>system artifacts</div>
               <div><span className="big"><CountUp to={9} /></span>automated metrics</div>
@@ -110,22 +101,22 @@ function PageHome({ go }) {
               <h2 style={{ marginTop: 10 }}>Three ways in</h2>
             </div>
           </Reveal>
-          <div className="highlight-grid">
-            {[
-              { route: "leaderboard", eyebrow: "Results", title: "Leaderboard", desc: "How current LLMs score across all 11 systems — and the cost-performance of each model.", delay: 0 },
-              { route: "systems", eyebrow: "Benchmark", title: "Systems & Metrics", desc: "Eleven real codebases evaluated across four automated phases.", delay: 160 },
-              { route: "cite", eyebrow: "Use it", title: "Cite & Contribute", desc: "Cite the paper, or contribute new models to the leaderboard.", delay: 320 }
-            ].map(c => (
-              <Reveal key={c.route} delay={c.delay}>
-                <div className="highlight-card" onClick={() => go(c.route)}>
+          <Reveal>
+            <div className="highlight-grid">
+              {[
+                { route: "leaderboard", eyebrow: "Results", title: "Leaderboard", desc: "How current LLMs score across all 11 systems — and the cost-performance of each model." },
+                { route: "systems", eyebrow: "Benchmark", title: "Systems & Metrics", desc: "Eleven real codebases evaluated across four automated phases." },
+                { route: "cite", eyebrow: "Use it", title: "Cite & Contribute", desc: "Cite the paper, or contribute new models to the leaderboard." }
+              ].map(c => (
+                <div key={c.route} className="highlight-card" onClick={() => go(c.route)}>
                   <span className="eyebrow accent" style={{ marginBottom: 12 }}>{c.eyebrow}</span>
                   <h3>{c.title}</h3>
                   <p>{c.desc}</p>
                   <span className="arrow">Open <span className="ar">→</span></span>
                 </div>
-              </Reveal>
-            ))}
-          </div>
+              ))}
+            </div>
+          </Reveal>
         </div>
       </section>
     </div>
