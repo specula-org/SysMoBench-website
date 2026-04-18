@@ -153,7 +153,7 @@ function PageSystems() {
         <div className="wrap">
           <FadeIn>
             <span className="eyebrow accent">Benchmark</span>
-            <h1 style={{ fontSize: 44, marginTop: 10 }}>Evaluating real-world systems through 4 systematic phases</h1>
+            <h1 style={{ fontSize: 44, marginTop: 10 }}>Evaluating real-world systems through systematic phases</h1>
             <p className="lead" style={{ maxWidth: 760 }}>
               Each AI-generated model is pushed through four automated phases, from parsing to invariant checking. Tasks come with system code, expert-written invariant templates, and instrumented traces.
             </p>
@@ -215,7 +215,7 @@ function PageSystems() {
         <div className="wrap">
           <Reveal>
             <h2 style={{ fontSize: 32 }}>The four phases</h2>
-            <p className="lead" style={{ fontSize: 17 }}>A syntactically valid TLA+ module is just the start. Each phase adds a stricter correctness bar.</p>
+            <p className="lead" style={{ fontSize: 17 }}>A syntactically valid TLA+ module is just the start. Each phase evaluates a stronger correctness property.</p>
           </Reveal>
           <Reveal delay={80}>
             <div className="mtabs" style={{ marginTop: 24 }}>
