@@ -153,7 +153,7 @@ function PageSystems() {
         <div className="wrap">
           <FadeIn>
             <span className="eyebrow accent">Benchmark</span>
-            <h1 style={{ fontSize: 44, marginTop: 10 }}>4 evaluation phases · 11 real systems</h1>
+            <h1 style={{ fontSize: 44, marginTop: 10 }}>Evaluating real-world systems through 4 systematic phases</h1>
             <p className="lead" style={{ maxWidth: 760 }}>
               Each AI-generated model is pushed through four automated phases, from parsing to invariant checking. Tasks come with system code, expert-written invariant templates, and instrumented traces.
             </p>
@@ -161,38 +161,6 @@ function PageSystems() {
         </div>
       </section>
 
-      {/* PHASES FIRST */}
-      <section className="section">
-        <div className="wrap">
-          <Reveal>
-            <h2 style={{ fontSize: 32 }}>The four phases</h2>
-            <p className="lead" style={{ fontSize: 17 }}>A syntactically valid TLA+ module is just the start. Each phase adds a stricter correctness bar.</p>
-          </Reveal>
-          <Reveal delay={80}>
-            <div className="mtabs" style={{ marginTop: 24 }}>
-              {SMB_DATA.metrics.map((m, i) => (
-                <button key={m.id} className={"mtab" + (metric === m.id ? " active" : "")} onClick={() => setMetric(m.id)}>
-                  Phase {i + 1} · {m.name}
-                </button>
-              ))}
-            </div>
-            <div className="phase-swap" key={"card-" + metric}>
-              <div className="card" style={{ borderColor: "var(--line-soft)" }}>
-                <span className="eyebrow accent">Phase {SMB_DATA.metrics.indexOf(activeMetric) + 1}</span>
-                <h3 style={{ marginTop: 10 }}>{activeMetric.name}</h3>
-                <p style={{ margin: 0, fontSize: 16 }}>{activeMetric.blurb}</p>
-              </div>
-            </div>
-          </Reveal>
-          <Reveal delay={160}>
-            <div className="phase-swap phase-swap--delayed" key={"banner-" + metric} style={{ marginTop: 24 }}>
-              <PhaseBanner phase={SMB_DATA.metrics.indexOf(activeMetric) + 1} />
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ARTIFACTS SECOND */}
       <section className="section" style={{ background: "var(--paper-2)" }}>
         <div className="wrap">
           <Reveal>
@@ -242,6 +210,37 @@ function PageSystems() {
           </Reveal>
         </div>
       </section>
+      
+      <section className="section">
+        <div className="wrap">
+          <Reveal>
+            <h2 style={{ fontSize: 32 }}>The four phases</h2>
+            <p className="lead" style={{ fontSize: 17 }}>A syntactically valid TLA+ module is just the start. Each phase adds a stricter correctness bar.</p>
+          </Reveal>
+          <Reveal delay={80}>
+            <div className="mtabs" style={{ marginTop: 24 }}>
+              {SMB_DATA.metrics.map((m, i) => (
+                <button key={m.id} className={"mtab" + (metric === m.id ? " active" : "")} onClick={() => setMetric(m.id)}>
+                  Phase {i + 1} · {m.name}
+                </button>
+              ))}
+            </div>
+            <div className="phase-swap" key={"card-" + metric}>
+              <div className="card" style={{ borderColor: "var(--line-soft)" }}>
+                <span className="eyebrow accent">Phase {SMB_DATA.metrics.indexOf(activeMetric) + 1}</span>
+                <h3 style={{ marginTop: 10 }}>{activeMetric.name}</h3>
+                <p style={{ margin: 0, fontSize: 16 }}>{activeMetric.blurb}</p>
+              </div>
+            </div>
+          </Reveal>
+          <Reveal delay={160}>
+            <div className="phase-swap phase-swap--delayed" key={"banner-" + metric} style={{ marginTop: 24 }}>
+              <PhaseBanner phase={SMB_DATA.metrics.indexOf(activeMetric) + 1} />
+            </div>
+          </Reveal>
+        </div>
+      </section>
+
     </>
   );
 }
@@ -251,7 +250,24 @@ function PageCite() {
   return (
     <section className="section">
       <div className="wrap-narrow">
-        <FadeIn>
+
+        <FadeIn delay={280}>
+          <hr className="sep" />
+          <h2 style={{ fontSize: 28 }}>Contribute</h2>
+          <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
+            Want to see more models on the leaderboard? Email <a className="link" href="mailto:cq@smail.nju.edu.cn">cq@smail.nju.edu.cn</a> or open a pull request on our GitHub repository.
+            For instructions on how to add a model, please see the <a className="link" href="https://github.com/specula-org/SysMoBench/blob/main/docs/Usage.md" target="_blank">documentation</a>.
+          </p>
+          <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)", marginTop: 12 }}>
+            We also welcome other contributions — new system artifacts, evaluation metrics, documentation improvements, or bug reports. Feel free to open an issue or reach out to discuss your ideas.
+          </p>
+          <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
+            <a className="btn primary" href="https://github.com/specula-org/SysMoBench" target="_blank">Open a PR ↗</a>
+            <a className="btn ghost" href="mailto:cq@smail.nju.edu.cn">Email us</a>
+          </div>
+        </FadeIn>
+
+                <FadeIn>
           <span className="eyebrow accent">Cite</span>
           <h1 style={{ fontSize: 44, marginTop: 10 }}>Cite SysMoBench</h1>
           <p className="lead">If SysMoBench is useful in your research, please cite our paper.</p>
@@ -277,22 +293,6 @@ function PageCite() {
               <CopyBibBtn />
             </div>
             <pre className="code" style={{ borderRadius: 0, border: "none" }}>{SMB_DATA.bibtex}</pre>
-          </div>
-        </FadeIn>
-
-        <FadeIn delay={280}>
-          <hr className="sep" />
-          <h2 style={{ fontSize: 28 }}>Contribute</h2>
-          <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
-            Want to see more models on the leaderboard? Email <a className="link" href="mailto:cq@smail.nju.edu.cn">cq@smail.nju.edu.cn</a> or open a pull request on our GitHub repository.
-            For instructions on how to add a model, please see the <a className="link" href="https://github.com/specula-org/SysMoBench/blob/main/docs/Usage.md" target="_blank">documentation</a>.
-          </p>
-          <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)", marginTop: 12 }}>
-            We also welcome other contributions — new system artifacts, evaluation metrics, documentation improvements, or bug reports. Feel free to open an issue or reach out to discuss your ideas.
-          </p>
-          <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-            <a className="btn primary" href="https://github.com/specula-org/SysMoBench" target="_blank">Open a PR ↗</a>
-            <a className="btn ghost" href="mailto:cq@smail.nju.edu.cn">Email us</a>
           </div>
         </FadeIn>
       </div>
