@@ -20,26 +20,12 @@
 
 .phase-host * { box-sizing: border-box; }
 .phase-host .banner {
-  width: 1600px;
-  height: 308px;
+  width: 100%;
   background: var(--paper);
   font-family: var(--sans);
   color: var(--ink);
   position: relative;
-  overflow: hidden;
-}
-
-/* Responsive scale wrapper:
-   .phase-fit holds the 1600×360 banner natively and scales it down to fit
-   the container width via CSS (set by JS based on container width). */
-.phase-fit {
-  width: 100%;
-  overflow: hidden;
-  border-radius: 12px;
   border: 1px solid var(--line-soft);
-  background: var(--paper);
-}
-.phase-fit .phase-fit-inner {
-  width: 1600px;
-  transform-origin: 0 0;
+  border-radius: 12px;
+  overflow: hidden;
 }

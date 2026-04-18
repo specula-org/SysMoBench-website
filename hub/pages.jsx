@@ -1,33 +1,14 @@
 /* global React, SMB_DATA, HubLeaderboard, Reveal, CountUp, FadeIn, OrgDot, AnimBar, APhase1, APhase2, APhase3, APhase4 */
 const { useState: useS_p, useEffect: useE_p, useRef: useR_p } = React;
 
-// Renders one of the four phase banners (1600×308 native) scaled to fit
-// the available container width. Aspect ratio is preserved.
 function PhaseBanner({ phase }) {
-  const wrapRef = useR_p(null);
-  const [scale, setScale] = useS_p(1180 / 1600);
-  useE_p(() => {
-    if (!wrapRef.current) return;
-    const update = () => {
-      const w = wrapRef.current.clientWidth;
-      if (w > 0) setScale(w / 1600);
-    };
-    update();
-    const ro = new ResizeObserver(update);
-    ro.observe(wrapRef.current);
-    return () => ro.disconnect();
-  }, []);
   const Comp = (typeof window !== 'undefined') && [null, window.APhase1, window.APhase2, window.APhase3, window.APhase4][phase];
   if (!Comp) {
     return <div className="fig-placeholder" style={{ height: 200 }}>[ phase diagram loading… ]</div>;
   }
   return (
     <div className="phase-host">
-      <div ref={wrapRef} className="phase-fit" style={{ height: 308 * scale }}>
-        <div className="phase-fit-inner" style={{ transform: `scale(${scale})` }}>
-          <Comp />
-        </div>
-      </div>
+      <Comp />
     </div>
   );
 }
@@ -147,7 +128,25 @@ function PageLeaderboard() {
 function PageSystems() {
   const [open, setOpen] = useS_p(null);
   const [metric, setMetric] = useS_p("syntax");
+  const [rowOpen, setRowOpen] = useS_p(() => new Set());
+  const gridRef = useR_p(null);
   const activeMetric = SMB_DATA.metrics.find(m => m.id === metric);
+
+  React.useLayoutEffect(() => {
+    const compute = () => {
+      if (!open || !gridRef.current) { setRowOpen(new Set()); return; }
+      const cards = gridRef.current.querySelectorAll(".task-card");
+      let openTop = null;
+      cards.forEach(c => { if (c.dataset.id === open) openTop = c.offsetTop; });
+      if (openTop == null) { setRowOpen(new Set()); return; }
+      const ids = new Set();
+      cards.forEach(c => { if (Math.abs(c.offsetTop - openTop) < 2) ids.add(c.dataset.id); });
+      setRowOpen(ids);
+    };
+    compute();
+    window.addEventListener("resize", compute);
+    return () => window.removeEventListener("resize", compute);
+  }, [open]);
 
   return (
     <>
@@ -178,14 +177,16 @@ function PageSystems() {
                 </button>
               ))}
             </div>
-            <div className="card" style={{ borderColor: "var(--line-soft)" }}>
-              <span className="eyebrow accent">Phase {SMB_DATA.metrics.indexOf(activeMetric) + 1}</span>
-              <h3 style={{ marginTop: 10 }}>{activeMetric.name}</h3>
-              <p style={{ margin: 0, fontSize: 16 }}>{activeMetric.blurb}</p>
+            <div className="phase-swap" key={"card-" + metric}>
+              <div className="card" style={{ borderColor: "var(--line-soft)" }}>
+                <span className="eyebrow accent">Phase {SMB_DATA.metrics.indexOf(activeMetric) + 1}</span>
+                <h3 style={{ marginTop: 10 }}>{activeMetric.name}</h3>
+                <p style={{ margin: 0, fontSize: 16 }}>{activeMetric.blurb}</p>
+              </div>
             </div>
           </Reveal>
           <Reveal delay={160}>
-            <div style={{ marginTop: 24 }}>
+            <div className="phase-swap phase-swap--delayed" key={"banner-" + metric} style={{ marginTop: 24 }}>
               <PhaseBanner phase={SMB_DATA.metrics.indexOf(activeMetric) + 1} />
             </div>
           </Reveal>
@@ -200,13 +201,15 @@ function PageSystems() {
             <p className="lead" style={{ fontSize: 17 }}>Click a card to see its details and source repository.</p>
           </Reveal>
           <Reveal delay={80}>
-            <div className="task-grid" style={{ marginTop: 24 }}>
+            <div className="task-grid" ref={gridRef} style={{ marginTop: 24 }}>
               {SMB_DATA.tasks.map((t, i) => {
                 const isOpen = open === t.id;
+                const inRow = rowOpen.has(t.id);
                 return (
                   <div
                     key={t.id}
-                    className={"task-card" + (isOpen ? " open" : "")}
+                    data-id={t.id}
+                    className={"task-card" + (isOpen ? " open" : "") + (inRow ? " row-open" : "")}
                     onClick={() => setOpen(isOpen ? null : t.id)}
                   >
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline", gap: 10 }}>
