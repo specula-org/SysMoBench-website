@@ -270,7 +270,7 @@ function PageCite() {
           <hr className="sep" />
           <h2 style={{ fontSize: 28 }}>Cite</h2>
           <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
-            If SysMoBench is useful in your research, please cite the paper.</a>.
+            If SysMoBench is useful in your research, please cite the paper.
           </p>
         </FadeIn>
 
