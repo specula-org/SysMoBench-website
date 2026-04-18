@@ -47,7 +47,7 @@ function PageHome({ go }) {
         <div className="wrap-narrow">
           <FadeIn>
             <div className="news-banner"><span className="dot" />Accepted at ICLR 2026</div>
-            <h1>Can Language Models <em>Formally Model</em> Real-World Systems?</h1>
+            <h1>Can language models <em>formally model</em> real-world systems?</h1>
             <p className="lead">A benchmark to evaluate LLMs on generating TLA+ specifications for real-world concurrent and distributed systems — from Spinlocks to Raft.</p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 28, flexWrap: "wrap" }}>
               <a className="btn accent" href="https://arxiv.org/abs/2509.23130" target="_blank">Read the Paper</a>
