@@ -84,9 +84,9 @@ function PageHome({ go }) {
           <Reveal>
             <div className="highlight-grid">
               {[
-                { route: "leaderboard", eyebrow: "Results", title: "Leaderboard", desc: "How current LLMs score across all 11 systems — and the cost-performance of each model." },
-                { route: "systems", eyebrow: "Benchmark", title: "Systems & Metrics", desc: "Eleven real codebases evaluated across four automated phases." },
-                { route: "cite", eyebrow: "Use it", title: "Cite & Contribute", desc: "Cite the paper, or contribute new models to the leaderboard." }
+                { route: "leaderboard", eyebrow: "Results", title: "Leaderboard", desc: "The performance and cost of each LLM" },
+                { route: "systems", eyebrow: "Benchmark", title: "Systems & Metrics", desc: "Real-world systems evaluated across four automated phases." },
+                { route: "cite", eyebrow: "Use it", title: "Contribute", desc: "Contribute to our leaderboard." }
               ].map(c => (
                 <div key={c.route} className="highlight-card" onClick={() => go(c.route)}>
                   <span className="eyebrow accent" style={{ marginBottom: 12 }}>{c.eyebrow}</span>
