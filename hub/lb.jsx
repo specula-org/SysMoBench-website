@@ -104,7 +104,13 @@ function HubLeaderboard({ showFilters = true }) {
                     onClick={() => !m.placeholder && setExpanded(isOpen ? null : m.id)}
                     style={m.placeholder ? { opacity: 0.55, cursor: "default" } : {}}
                   >
-                    <td className="rank">{m.placeholder || m.score == null ? "—" : i + 1}</td>
+                    <td className="rank"><span className="rank-slot">{
+                      m.placeholder || m.score == null
+                        ? "—"
+                        : i < 3
+                          ? <span className={"rank-medal " + ["gold", "silver", "bronze"][i]}>{i + 1}</span>
+                          : i + 1
+                    }</span></td>
                     <td><div className="modelname"><OrgDot org={m.org} logo={m.logo} />{m.name}</div></td>
                     {SMB_DATA.metrics.map(mt => {
                       const v = m.perMetric?.[mt.id];
