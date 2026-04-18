@@ -47,10 +47,10 @@ function PageHome({ go }) {
         <div className="wrap-narrow">
           <FadeIn>
             <div className="news-banner"><span className="dot" />Accepted at ICLR 2026</div>
-            <h1>Can language models <em>formally model</em> real-world systems?</h1>
-            <p className="lead">A benchmark to evaluate LLMs on generating TLA+ specifications for real-world concurrent and distributed systems — from Spinlocks to Raft.</p>
+            <h1>Can LLMs <em>Formally Model</em> Real-World Systems?</h1>
+            <p className="lead">A benchmark for evaluating LLMs on generating TLA+ specifications for real-world concurrent and distributed systems — from Spinlocks to Raft.</p>
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 28, flexWrap: "wrap" }}>
-              <a className="btn accent" href="https://arxiv.org/abs/2509.23130" target="_blank">Read the Paper</a>
+              <a className="btn accent" href="https://arxiv.org/pdf/2509.23130" target="_blank">Read the Paper</a>
               <button className="btn primary" onClick={() => go("leaderboard")}>View Leaderboard</button>
               <a className="btn ghost" href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub ↗</a>
             </div>
@@ -252,7 +252,6 @@ function PageCite() {
       <div className="wrap-narrow">
 
         <FadeIn delay={280}>
-          <hr className="sep" />
           <h2 style={{ fontSize: 28 }}>Contribute</h2>
           <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
             Want to see more models on the leaderboard? Email <a className="link" href="mailto:cq@smail.nju.edu.cn">cq@smail.nju.edu.cn</a> or open a pull request on our GitHub repository.
@@ -267,10 +266,12 @@ function PageCite() {
           </div>
         </FadeIn>
 
-                <FadeIn>
-          <span className="eyebrow accent">Cite</span>
-          <h1 style={{ fontSize: 44, marginTop: 10 }}>Cite SysMoBench</h1>
-          <p className="lead">If SysMoBench is useful in your research, please cite our paper.</p>
+        <FadeIn>
+          <hr className="sep" />
+          <h2 style={{ fontSize: 28 }}>Cite</h2>
+          <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
+            If SysMoBench is useful in your research, please cite the paper.</a>.
+          </p>
         </FadeIn>
 
         <FadeIn delay={160}>
