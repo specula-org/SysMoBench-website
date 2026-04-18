@@ -90,7 +90,6 @@ function HubLeaderboard({ showFilters = true }) {
                   </th>
                 );
               })}
-              <th className={sort.key === "cost" ? "sorted" : ""} onClick={() => onSort("cost")} style={{ textAlign: "right" }}>Cost <span className="sort">{arrow("cost")}</span></th>
               <th className={sort.key === "score" ? "sorted" : ""} onClick={() => onSort("score")} style={{ textAlign: "right" }}>Score <span className="sort">{arrow("score")}</span></th>
               <th style={{ width: 32 }}></th>
             </tr>
@@ -117,7 +116,6 @@ function HubLeaderboard({ showFilters = true }) {
                         </td>
                       );
                     })}
-                    <td style={{ textAlign: "right" }} className="cost">{m.cost == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : "$" + m.cost.toFixed(2)}</td>
                     <td style={{ textAlign: "right" }}>
                       {m.score == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : (
                         <span className="scorecell">
@@ -130,7 +128,7 @@ function HubLeaderboard({ showFilters = true }) {
                   </tr>
                   {!m.placeholder && (
                     <tr className="expand-row">
-                      <td colSpan={9}>
+                      <td colSpan={8}>
                         <div className={"expand-body" + (isOpen ? " on" : "")}>
                           <div className="inner">
                             <div className="pad">
@@ -144,15 +142,10 @@ function HubLeaderboard({ showFilters = true }) {
                                     <div className="taskbar" key={t.id}>
                                       <span className="tname">{t.id}</span>
                                       {isOpen ? <AnimBar pct={v} delay={ti * 40} height={8} /> : <span style={{display:"inline-block",width:"100%",height:8}} />}
-                                      <span className="val">{v}</span>
+                                      <span className="val">{v.toFixed(1)}</span>
                                     </div>
                                   );
                                 })}
-                              </div>
-                              <div style={{ marginTop: 18, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                                <span className="pill">cost/task ≈ {m.cost == null ? "TODO" : "$" + (m.cost / SMB_DATA.tasks.length).toFixed(2)}</span>
-                                <span className="pill">method · {method}</span>
-                                <span className="pill">runs · 3</span>
                               </div>
                             </div>
                           </div>
