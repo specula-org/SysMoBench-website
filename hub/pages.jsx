@@ -79,7 +79,6 @@ function PageHome({ go }) {
           <Reveal delay={80}>
             <div style={{ textAlign: "center", marginBottom: 40 }}>
               <span className="eyebrow accent">Explore</span>
-              <h2 style={{ marginTop: 10 }}>Three ways in</h2>
             </div>
           </Reveal>
           <Reveal>
