@@ -24,13 +24,15 @@ function HubLeaderboard({ showFilters = true }) {
 
   const orgs = ["All", ...new Set(SMB_DATA.models.filter(m => !m.placeholder).map(m => m.org))];
 
+  const getVal = (m, key) => key.startsWith("metric:") ? (m.perMetric?.[key.slice(7)] ?? null) : m[key];
+
   const rows = useM_lb(() => {
     let arr = SMB_DATA.models.filter(m => orgFilter === "All" || m.org === orgFilter || m.placeholder);
     arr = [...arr];
     arr.sort((a, b) => {
       if (a.placeholder) return 1;
       if (b.placeholder) return -1;
-      const va = a[sort.key], vb = b[sort.key];
+      const va = getVal(a, sort.key), vb = getVal(b, sort.key);
       if (va == null) return 1;
       if (vb == null) return -1;
       if (typeof va === "string") return sort.dir === "asc" ? va.localeCompare(vb) : vb.localeCompare(va);
@@ -73,8 +75,21 @@ function HubLeaderboard({ showFilters = true }) {
             <tr>
               <th className="rank">#</th>
               <th className={sort.key === "name" ? "sorted" : ""} onClick={() => onSort("name")}>Model <span className="sort">{arrow("name")}</span></th>
-              <th className={sort.key === "org" ? "sorted" : ""} onClick={() => onSort("org")}>Org <span className="sort">{arrow("org")}</span></th>
-              <th>Context</th>
+              {SMB_DATA.metrics.map((mt, mi) => {
+                const k = "metric:" + mt.id;
+                const label = mt.name.replace(/ Correctness$/, "");
+                return (
+                  <th
+                    key={mt.id}
+                    className={sort.key === k ? "sorted" : ""}
+                    onClick={() => onSort(k)}
+                    style={{ textAlign: "right" }}
+                    title={`Phase ${mi + 1} · ${mt.name}`}
+                  >
+                    {label} <span className="sort">{arrow(k)}</span>
+                  </th>
+                );
+              })}
               <th className={sort.key === "cost" ? "sorted" : ""} onClick={() => onSort("cost")} style={{ textAlign: "right" }}>Cost <span className="sort">{arrow("cost")}</span></th>
               <th className={sort.key === "score" ? "sorted" : ""} onClick={() => onSort("score")} style={{ textAlign: "right" }}>Score <span className="sort">{arrow("score")}</span></th>
               <th style={{ width: 32 }}></th>
@@ -92,8 +107,16 @@ function HubLeaderboard({ showFilters = true }) {
                   >
                     <td className="rank">{m.placeholder || m.score == null ? "—" : i + 1}</td>
                     <td><div className="modelname"><OrgDot org={m.org} logo={m.logo} />{m.name}</div></td>
-                    <td style={{ color: "var(--ink-2)" }}>{m.org}</td>
-                    <td><span className="ctx-chip">{m.ctx}</span></td>
+                    {SMB_DATA.metrics.map(mt => {
+                      const v = m.perMetric?.[mt.id];
+                      return (
+                        <td key={mt.id} style={{ textAlign: "right", fontFamily: "var(--mono)", fontSize: 13 }}>
+                          {v == null
+                            ? <span style={{ color: "var(--ink-3)", fontSize: 12 }}>TODO</span>
+                            : v.toFixed(1)}
+                        </td>
+                      );
+                    })}
                     <td style={{ textAlign: "right" }} className="cost">{m.cost == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : "$" + m.cost.toFixed(2)}</td>
                     <td style={{ textAlign: "right" }}>
                       {m.score == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : (
@@ -107,7 +130,7 @@ function HubLeaderboard({ showFilters = true }) {
                   </tr>
                   {!m.placeholder && (
                     <tr className="expand-row">
-                      <td colSpan={7}>
+                      <td colSpan={9}>
                         <div className={"expand-body" + (isOpen ? " on" : "")}>
                           <div className="inner">
                             <div className="pad">

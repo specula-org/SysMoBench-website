@@ -37,20 +37,20 @@ window.SMB_DATA = {
   // Leaderboard — values TBD; null renders as "TODO" in the UI.
   // To fill in, replace null with a number (score 0-100, cost USD per full run, perTask 0-100).
   models: [
-    { id: "gpt-5-4",        name: "GPT-5.4",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "gpt-5-2",        name: "GPT-5.2",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "claude-opus-47", name: "Claude Opus 4.7",   org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "claude-sonnet-46",name:"Claude Sonnet 4.6", org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "gemini-31-pro",  name: "Gemini 3.1 Pro",    org: "Google",    logo: "assets/logos/gemini-color.svg",   ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "grok-4",         name: "Grok 4",            org: "xAI",       logo: "assets/logos/grok.svg",           ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "deepseek-v32",   name: "DeepSeek V3.2",     org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "deepseek-r1",    name: "DeepSeek R1",       org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "qwen3-6-plus",   name: "Qwen3.6 Plus",      org: "Alibaba",   logo: "assets/logos/qwen-color.svg",     ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "kimi-k25",       name: "Kimi K2.5",         org: "Moonshot",  logo: "assets/logos/moonshot.svg",       ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "glm-51",         name: "GLM 5.1",           org: "Zhipu",     logo: "assets/logos/zhipu-color.svg",    ctx: "TODO", cost: null, score: null, perTask: {} },
-    { id: "minimax-m27",    name: "MiniMax-M2.7",      org: "MiniMax",   logo: "assets/logos/minimax-color.svg",  ctx: "TODO", cost: null, score: null, perTask: {} },
+    { id: "gpt-5-4",        name: "GPT-5.4",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "gpt-5-2",        name: "GPT-5.2",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "claude-opus-47", name: "Claude Opus 4.7",   org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "claude-sonnet-46",name:"Claude Sonnet 4.6", org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "gemini-31-pro",  name: "Gemini 3.1 Pro",    org: "Google",    logo: "assets/logos/gemini-color.svg",   ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "grok-4",         name: "Grok 4",            org: "xAI",       logo: "assets/logos/grok.svg",           ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "deepseek-v32",   name: "DeepSeek V3.2",     org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "deepseek-r1",    name: "DeepSeek R1",       org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "qwen3-6-plus",   name: "Qwen3.6 Plus",      org: "Alibaba",   logo: "assets/logos/qwen-color.svg",     ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "kimi-k25",       name: "Kimi K2.5",         org: "Moonshot",  logo: "assets/logos/moonshot.svg",       ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "glm-51",         name: "GLM 5.1",           org: "Zhipu",     logo: "assets/logos/zhipu-color.svg",    ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
+    { id: "minimax-m27",    name: "MiniMax-M2.7",      org: "MiniMax",   logo: "assets/logos/minimax-color.svg",  ctx: "TODO", cost: null, score: null, perMetric: {}, perTask: {} },
     { id: "agent-placeholder", name: "[Agent methods — placeholder]", org: "—", ctx: "—", cost: null, score: null,
-      perTask: {}, placeholder: true }
+      perMetric: {}, perTask: {}, placeholder: true }
   ],
 
   bibtex: `@inproceedings{cheng2026sysmobench,
