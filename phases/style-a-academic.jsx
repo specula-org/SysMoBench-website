@@ -7,15 +7,6 @@ const A = {
 };
 const BODY_H = 308;
 
-function AHeader({ num, title }) {
-  return (
-    <div style={{ display: 'flex', alignItems: 'baseline', gap: 12, padding: '12px 24px 10px', borderBottom: `1px solid ${A.line}`, height: 52, boxSizing: 'border-box' }}>
-      <div style={{ fontFamily: 'var(--mono)', fontSize: 11, letterSpacing: 1, color: 'var(--accent)', fontWeight: 600 }}>PHASE {num}</div>
-      <div style={{ flex: 1, height: 1, background: A.line }} />
-      <div style={{ fontFamily: 'var(--serif)', fontSize: 20, fontWeight: 600, letterSpacing: -0.3 }}>{title}</div>
-    </div>
-  );
-}
 function ACode({ title, children, w }) {
   return (
     <div style={{ width: w, background: '#fbfcfe', border: `1px solid ${A.line}`, borderRadius: 4, overflow: 'hidden', flexShrink: 0 }}>
@@ -72,7 +63,6 @@ function APanel({ title, color = 'var(--accent-deep)', children, style = {} }) {
 function APhase1() {
   return (
     <div className="banner">
-      <AHeader num="01" title="Syntax Correctness" />
       <div style={{ padding: '18px 32px', display: 'flex', alignItems: 'center', gap: 18, height: BODY_H, boxSizing: 'border-box' }}>
         <ACode title="etcd_raft.tla" w={280}>
 {`---- MODULE etcd_raft ----
@@ -120,7 +110,6 @@ Next == \\E i \\in Server:
 function APhase2() {
   return (
     <div className="banner">
-      <AHeader num="02" title="Runtime Correctness" />
       <div style={{ padding: '16px 32px', display: 'flex', alignItems: 'center', gap: 18, height: BODY_H, boxSizing: 'border-box' }}>
         <ACode title="parsed.tla (no syntax errors)" w={270}>
 {`Next == \\E i \\in Server:
@@ -182,7 +171,6 @@ Timeout(i) ==
 function APhase3() {
   return (
     <div className="banner">
-      <AHeader num="03" title="Conformance to System Implementation" />
       <div style={{ padding: '14px 24px', display: 'flex', gap: 14, height: BODY_H, boxSizing: 'border-box', alignItems: 'stretch' }}>
         <div style={{ display: 'flex', flexDirection: 'column', gap: 8, width: 240, flexShrink: 0 }}>
           <div style={{ padding: '7px 10px', border: `1.5px solid ${A.ink3}`, borderRadius: 4, background: '#fff', flex: 1 }}>
@@ -277,7 +265,6 @@ Heartbeat(i) == ...`}
 function APhase4() {
   return (
     <div className="banner">
-      <AHeader num="04" title="Invariant Correctness" />
       <div style={{ padding: '18px 32px', display: 'flex', alignItems: 'center', gap: 20, height: BODY_H, boxSizing: 'border-box' }}>
         <ACode title="invariant_template.yaml" w={320}>
 {`name: Inv1_LogConsistency

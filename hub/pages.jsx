@@ -1,7 +1,7 @@
 /* global React, SMB_DATA, HubLeaderboard, Reveal, CountUp, FadeIn, OrgDot, AnimBar, APhase1, APhase2, APhase3, APhase4 */
 const { useState: useS_p, useEffect: useE_p, useRef: useR_p } = React;
 
-// Renders one of the four phase banners (1600×360 native) scaled to fit
+// Renders one of the four phase banners (1600×308 native) scaled to fit
 // the available container width. Aspect ratio is preserved.
 function PhaseBanner({ phase }) {
   const wrapRef = useR_p(null);
@@ -23,7 +23,7 @@ function PhaseBanner({ phase }) {
   }
   return (
     <div className="phase-host">
-      <div ref={wrapRef} className="phase-fit" style={{ height: 360 * scale }}>
+      <div ref={wrapRef} className="phase-fit" style={{ height: 308 * scale }}>
         <div className="phase-fit-inner" style={{ transform: `scale(${scale})` }}>
           <Comp />
         </div>

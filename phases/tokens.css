@@ -21,7 +21,7 @@
 .phase-host * { box-sizing: border-box; }
 .phase-host .banner {
   width: 1600px;
-  height: 360px;
+  height: 308px;
   background: var(--paper);
   font-family: var(--sans);
   color: var(--ink);
