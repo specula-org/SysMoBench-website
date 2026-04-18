@@ -1,10 +1,18 @@
 /* global React, SMB_DATA, useReveal, AnimBar */
 const { useState: useS_lb, useMemo: useM_lb } = React;
 
-function OrgDot({ org }) {
-  const map = { OpenAI: "openai", Anthropic: "anthropic", Google: "google", DeepSeek: "deepseek", Meta: "meta", Alibaba: "alibaba" };
+function OrgDot({ org, logo }) {
+  const [failed, setFailed] = useS_lb(false);
+  const map = { OpenAI: "openai", Anthropic: "anthropic", Google: "google", DeepSeek: "deepseek", Meta: "meta", Alibaba: "alibaba", xAI: "xai", MiniMax: "minimax", Moonshot: "moonshot", Zhipu: "zhipu" };
   const cls = map[org] || "";
   const letter = (org || "?").slice(0, 1);
+  if (logo && !failed) {
+    return (
+      <span className={"logo-dot has-img"}>
+        <img src={logo} alt={org} onError={() => setFailed(true)} />
+      </span>
+    );
+  }
   return <span className={"logo-dot " + cls}>{letter}</span>;
 }
 
@@ -82,13 +90,13 @@ function HubLeaderboard({ showFilters = true }) {
                     onClick={() => !m.placeholder && setExpanded(isOpen ? null : m.id)}
                     style={m.placeholder ? { opacity: 0.55, cursor: "default" } : {}}
                   >
-                    <td className="rank">{m.placeholder ? "—" : i + 1}</td>
-                    <td><div className="modelname"><OrgDot org={m.org} />{m.name}</div></td>
+                    <td className="rank">{m.placeholder || m.score == null ? "—" : i + 1}</td>
+                    <td><div className="modelname"><OrgDot org={m.org} logo={m.logo} />{m.name}</div></td>
                     <td style={{ color: "var(--ink-2)" }}>{m.org}</td>
                     <td><span className="ctx-chip">{m.ctx}</span></td>
-                    <td style={{ textAlign: "right" }} className="cost">{m.cost == null ? "—" : "$" + m.cost.toFixed(2)}</td>
+                    <td style={{ textAlign: "right" }} className="cost">{m.cost == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : "$" + m.cost.toFixed(2)}</td>
                     <td style={{ textAlign: "right" }}>
-                      {m.score == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>pending</span> : (
+                      {m.score == null ? <span style={{ color: "var(--ink-3)", fontFamily: "var(--mono)", fontSize: 12 }}>TODO</span> : (
                         <span className="scorecell">
                           <span className="bar"><AnimBar pct={(m.score / maxScore) * 100} /></span>
                           <span className="score-num">{m.score.toFixed(1)}</span>
@@ -119,7 +127,7 @@ function HubLeaderboard({ showFilters = true }) {
                                 })}
                               </div>
                               <div style={{ marginTop: 18, display: "flex", gap: 8, flexWrap: "wrap" }}>
-                                <span className="pill">cost/task ≈ ${(m.cost / SMB_DATA.tasks.length).toFixed(2)}</span>
+                                <span className="pill">cost/task ≈ {m.cost == null ? "TODO" : "$" + (m.cost / SMB_DATA.tasks.length).toFixed(2)}</span>
                                 <span className="pill">method · {method}</span>
                                 <span className="pill">runs · 3</span>
                               </div>
