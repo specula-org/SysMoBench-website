@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="hub/hub.css?v=11" />
-<link rel="stylesheet" href="phases/tokens.css?v=11" />
+<link rel="stylesheet" href="hub/hub.css?v=14" />
+<link rel="stylesheet" href="phases/tokens.css?v=14" />
 </head>
 <body>
   <div id="root"></div>
@@ -24,11 +24,11 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <script src="data.js?v=11"></script>
-  <script type="text/babel" src="hub/anim.jsx?v=11"></script>
-  <script type="text/babel" src="hub/lb.jsx?v=11"></script>
-  <script type="text/babel" src="phases/style-a-academic.jsx?v=11"></script>
-  <script type="text/babel" src="hub/pages.jsx?v=11"></script>
+  <script src="data.js?v=14"></script>
+  <script type="text/babel" src="hub/anim.jsx?v=14"></script>
+  <script type="text/babel" src="hub/lb.jsx?v=14"></script>
+  <script type="text/babel" src="phases/style-a-academic.jsx?v=14"></script>
+  <script type="text/babel" src="hub/pages.jsx?v=14"></script>
 
   <script type="text/babel" data-presets="env,react">
     const { useState, useEffect } = React;
@@ -59,7 +59,7 @@
                 {tweaks.dark ? "☀" : "☾"}
               </button>
               <a className="nav-cta" href="https://github.com/specula-org/SysMoBench" target="_blank" style={{marginLeft:8}}>
-                GitHub <span>↗</span>
+                GitHub
               </a>
             </div>
           </div>
@@ -139,13 +139,14 @@
             <div className="wrap">
               <div style={{display:"flex",alignItems:"center",gap:10}}>
                 <Mark size={22} />
-                <span>SysMoBench · specula-org</span>
+                <span>SysMoBench · <a href="https://github.com/specula-org" target="_blank">specula-org</a></span>
               </div>
-              <div style={{display:"flex",gap:18}}>
+              <div style={{display:"flex",alignItems:"center",gap:18}}>
                 <a href="https://arxiv.org/abs/2509.23130" target="_blank">Paper</a>
                 <a href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub</a>
                 <a onClick={() => go("cite")} style={{cursor:"pointer"}}>Cite</a>
-                <span>Apache-2.0</span>
+                <span className="foot-sep" aria-hidden="true" />
+                <span>Released under Apache 2.0</span>
               </div>
             </div>
           </footer>

@@ -61,16 +61,21 @@ function APanel({ title, color = 'var(--accent-deep)', children, style = {} }) {
 // ── Phase 1 ──  code splits into Path A (full-file parse) + Path B (per-action),
 // both converge on the final metric on the right.
 function APhase1() {
+  const actions = [
+    { ok: true, name: 'Timeout(i)' },
+    { ok: true, name: 'Election(i)' },
+    { ok: false, name: 'Heartbeat(i)' },
+  ];
   return (
     <div className="banner">
       <div style={{
-        padding: '28px 32px',
+        padding: '24px 32px',
         display: 'grid',
-        gridTemplateColumns: '340px 56px 1fr 56px 240px',
+        gridTemplateColumns: '320px 56px 1fr 230px',
         gridTemplateRows: 'auto auto',
         columnGap: 0,
-        rowGap: 18,
-        alignItems: 'center',
+        rowGap: 16,
+        alignItems: 'stretch',
       }}>
         <div style={{ gridColumn: '1', gridRow: '1 / span 2' }}>
           <ACode title="etcd_raft.tla" w="100%">
@@ -88,60 +93,83 @@ Next == \\E i \\in Server:
           </ACode>
         </div>
 
-        <div style={{ gridColumn: '2', gridRow: '1', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ gridColumn: '2', gridRow: '1', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <AArrow label="parse" w={52} />
         </div>
-        <div style={{ gridColumn: '3', gridRow: '1' }}>
-          <APanel title="PATH A · FULL-FILE PARSE → Score₁">
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '14px 16px', background: '#fbfcfe', border: `1px solid ${A.line}`, borderRadius: 6 }}>
-              <div style={{ padding: '8px 14px', background: '#fff', border: `1.5px solid ${A.ink3}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12.5 }}>SANY parser</div>
+        <div style={{ gridColumn: '3', gridRow: '1', display: 'flex', alignItems: 'center' }}>
+          <APanel title="PATH A · WHOLE-FILE PARSE → Score₁" style={{ width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '12px 16px', background: '#fbfcfe', border: `1px solid ${A.line}`, borderRadius: 6 }}>
+              <div style={{ padding: '7px 14px', background: '#fff', border: `1.5px solid ${A.ink3}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12 }}>SANY parser</div>
               <AArrow w={32} />
-              <span style={{ padding: '7px 16px', background: 'rgba(16,185,129,0.1)', color: A.ok, border: `1px solid ${A.ok}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600 }}>PASS</span>
-              <span style={{ fontFamily: 'var(--mono)', fontSize: 12, color: A.ink3 }}>or</span>
-              <span style={{ padding: '7px 16px', background: 'rgba(239,68,68,0.08)', color: A.err, border: `1px solid ${A.err}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 600 }}>FAIL</span>
-              <span style={{ marginLeft: 'auto', fontFamily: 'var(--mono)', fontSize: 11, color: A.ink3 }}>whole file</span>
+              <span style={{ padding: '7px 16px', background: 'rgba(16,185,129,0.1)', color: A.ok, border: `1.5px solid ${A.ok}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700 }}>✓ PASS</span>
+              <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: A.ink4 }}>/</span>
+              <span style={{ padding: '7px 16px', background: 'rgba(239,68,68,0.08)', color: A.err, border: `1.5px solid ${A.err}`, borderRadius: 4, fontFamily: 'var(--mono)', fontSize: 12, fontWeight: 700 }}>✕ FAIL</span>
+              <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'baseline', gap: 6 }}>
+                <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: A.ink3 }}>Score₁ =</span>
+                <span style={{ fontFamily: 'var(--serif)', fontSize: 20, fontWeight: 700, color: A.ok, lineHeight: 1 }}>1.0</span>
+              </div>
             </div>
           </APanel>
-        </div>
-        <div style={{ gridColumn: '4', gridRow: '1', display: 'flex', justifyContent: 'center' }}>
-          <AArrow w={52} />
         </div>
 
-        <div style={{ gridColumn: '2', gridRow: '2', display: 'flex', justifyContent: 'center' }}>
+        <div style={{ gridColumn: '2', gridRow: '2', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <AArrow label="extract" w={52} />
         </div>
-        <div style={{ gridColumn: '3', gridRow: '2' }}>
-          <APanel title="PATH B · PER-ACTION SYNTAX → Score₂">
-            <div style={{ padding: '14px 16px', background: '#fbfcfe', border: `1px solid ${A.line}`, borderRadius: 6, display: 'flex', alignItems: 'center', gap: 24, flexWrap: 'wrap' }}>
-              {[['ok', 'Timeout(i)'], ['ok', 'Election(i)'], ['err', 'Heartbeat(i)']].map(([k, name]) => (
-                <div key={name} style={{ display: 'flex', alignItems: 'center', gap: 8, fontFamily: 'var(--mono)', fontSize: 12.5, color: A.ink2 }}>
-                  {k === 'ok'
-                    ? <span style={{ color: A.ok, fontWeight: 700, fontSize: 14 }}>✓</span>
-                    : <span style={{ color: A.err, fontWeight: 700, fontSize: 14 }}>✕</span>}
-                  <span>{name}</span>
+        <div style={{ gridColumn: '3', gridRow: '2', display: 'flex', alignItems: 'center' }}>
+          <APanel title="PATH B · PER-ACTION SYNTAX → Score₂" style={{ width: '100%' }}>
+            <div style={{ display: 'flex', alignItems: 'stretch', gap: 10 }}>
+              <div style={{ flex: 1, display: 'flex', gap: 8 }}>
+                {actions.map(a => (
+                  <div key={a.name} style={{
+                    flex: 1,
+                    display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 8,
+                    padding: '10px 10px',
+                    background: a.ok ? 'rgba(16,185,129,0.08)' : 'rgba(239,68,68,0.06)',
+                    border: `1.5px solid ${a.ok ? A.ok : A.err}`,
+                    borderRadius: 6,
+                    fontFamily: 'var(--mono)', fontSize: 12, color: A.ink2,
+                  }}>
+                    <span style={{ color: a.ok ? A.ok : A.err, fontWeight: 700, fontSize: 15 }}>{a.ok ? '✓' : '✕'}</span>
+                    <span>{a.name}</span>
+                  </div>
+                ))}
+              </div>
+              <div style={{ width: 132, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', padding: '4px 10px', background: '#fff', border: `1.5px solid ${A.ink3}`, borderRadius: 6 }}>
+                <div style={{ fontFamily: 'var(--serif)', fontSize: 26, fontWeight: 700, color: A.ink, lineHeight: 1 }}>2 / 3</div>
+                <div style={{ display: 'flex', alignItems: 'baseline', gap: 6, marginTop: 4 }}>
+                  <span style={{ fontFamily: 'var(--mono)', fontSize: 10, color: A.ink3 }}>Score₂ =</span>
+                  <span style={{ fontFamily: 'var(--serif)', fontSize: 16, fontWeight: 700, color: A.accentDeep, lineHeight: 1 }}>0.67</span>
                 </div>
-              ))}
-              <span style={{ marginLeft: 'auto', fontFamily: 'var(--mono)', fontSize: 11, color: A.ink3 }}>2 / 3 actions</span>
+              </div>
             </div>
           </APanel>
-        </div>
-        <div style={{ gridColumn: '4', gridRow: '2', display: 'flex', justifyContent: 'center' }}>
-          <AArrow w={52} />
         </div>
 
         <div style={{
-          gridColumn: '5', gridRow: '1 / span 2',
-          display: 'flex', flexDirection: 'column', gap: 12,
-          padding: '22px 22px',
+          gridColumn: '4', gridRow: '1 / span 2',
+          display: 'flex', flexDirection: 'column', gap: 10,
+          padding: '16px 18px',
           background: 'var(--accent-softer)',
           border: `1px solid var(--accent-soft)`,
           borderRadius: 8,
           alignSelf: 'stretch',
           justifyContent: 'center',
+          marginLeft: 18,
         }}>
-          <div style={{ fontFamily: 'var(--mono)', fontSize: 11, color: A.accentDeep, fontWeight: 700, letterSpacing: 0.8 }}>FINAL METRIC</div>
-          <div style={{ fontFamily: 'var(--serif)', fontSize: 22, fontWeight: 700, color: A.ink2, lineHeight: 1.35 }}>
-            0.5 · Score₁<br />+ 0.5 · Score₂
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: A.accentDeep, fontWeight: 700, letterSpacing: 0.8 }}>FINAL METRIC</div>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 13, fontWeight: 600, color: A.ink2, lineHeight: 1.5 }}>
+            ½ · Score₁ + ½ · Score₂
+          </div>
+          <div style={{ height: 1, background: 'var(--accent-soft)' }} />
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 10.5, color: A.ink3, lineHeight: 1.5 }}>
+            example
+          </div>
+          <div style={{ fontFamily: 'var(--mono)', fontSize: 11.5, color: A.ink2 }}>
+            ½·1.00 + ½·0.67
+          </div>
+          <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 11, color: A.ink3 }}>=</span>
+            <span style={{ fontFamily: 'var(--mono)', fontSize: 22, fontWeight: 700, color: A.accentDeep, lineHeight: 1 }}>0.83</span>
           </div>
         </div>
       </div>

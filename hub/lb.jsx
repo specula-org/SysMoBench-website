@@ -20,7 +20,7 @@ function HubLeaderboard({ showFilters = true }) {
   const [sort, setSort] = useS_lb({ key: "score", dir: "desc" });
   const [expanded, setExpanded] = useS_lb(null);
   const [orgFilter, setOrgFilter] = useS_lb("All");
-  const [method, setMethod] = useS_lb("direct_call");
+  const [method, setMethod] = useS_lb("llm_only");
 
   const orgs = ["All", ...new Set(SMB_DATA.models.filter(m => !m.placeholder).map(m => m.org))];
 
@@ -63,8 +63,8 @@ function HubLeaderboard({ showFilters = true }) {
           ))}
           <div className="method-select-wrap">
             <select className="method-select" value={method} onChange={e => setMethod(e.target.value)}>
-              <option value="direct_call">direct_call</option>
-              <option value="agent" disabled>agent (coming soon)</option>
+              <option value="llm_only">LLM-Only</option>
+              <option value="agent" disabled>Agent (coming soon)</option>
             </select>
           </div>
         </div>

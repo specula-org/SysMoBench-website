@@ -10,7 +10,8 @@ window.SMB_DATA = {
       "Qian Cheng", "Ruize Tang", "Emilie Ma", "Finn Hackett", "Peiyang He",
       "Yiming Su", "Ivan Beschastnikh", "Yu Huang", "Xiaoxing Ma", "Tianyin Xu"
     ],
-    abstract: "Formal models are essential to specifying large, complex computer systems and verifying their correctness, but are notoriously expensive to write and maintain. SysMoBench evaluates AI's ability to formally model large, complex concurrent and distributed systems using TLA+, the de facto specification language. We automate metrics like syntactic and runtime correctness, conformance to system code, and invariant correctness across nine real-world system artifacts."
+    // {NUM_SYSTEMS} is substituted with SMB_DATA.tasks.length at render time.
+    abstract: "Formal models are essential to specifying large, complex computer systems and verifying their correctness, but are notoriously expensive to write and maintain. SysMoBench evaluates AI's ability to formally model large, complex concurrent and distributed systems using TLA+, the de facto specification language. We automate metrics like syntactic and runtime correctness, conformance to system code, and invariant correctness across {NUM_SYSTEMS} real-world system artifacts."
   },
 
   tasks: [
@@ -34,29 +35,36 @@ window.SMB_DATA = {
     { id: "invariant",  name: "Invariant Correctness",blurb: "TLC with expert-written invariant templates." }
   ],
 
-  // Leaderboard — values TBD; null renders as "TODO" in the UI.
-  // To fill in, replace null with a number (score 0-100, cost USD per full run, perTask 0-100).
+  // Leaderboard — sourced from docs/leaderboard/paper_summary.csv (values ×100).
   models: [
-    { id: "gpt-5-4",        name: "GPT-5.4",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", score: 69.7,
+    { id: "gemini-31-pro",   name: "Gemini 3.1 Pro",   org: "Google",    logo: "assets/logos/gemini-color.svg",   ctx: "TODO", score: 89.3,
+      perMetric: { syntax: 100.0, runtime: 92.4, conformance: 84.2, invariant: 80.6 },
+      perTask: { spin: 100, mutex: 84.5, rwmutex: 97.5, ringbuf: 100, locksvc: 83.3, xline: 88.7, raftkvs: 77.5, redis: 81.2, zk: 84.8, etcd: 84.7, dqueue: 100 } },
+    { id: "gpt-5-4",         name: "GPT-5.4",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", score: 69.7,
       perMetric: { syntax: 100.0, runtime: 74.8, conformance: 63.6, invariant: 40.3 },
       perTask: { spin: 100, mutex: 81, rwmutex: 97.5, ringbuf: 33.3, locksvc: 83.3, xline: 31.2, raftkvs: 68.8, redis: 79.7, zk: 91.7, etcd: 25, dqueue: 75 } },
-    { id: "gpt-5-2",        name: "GPT-5.2",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "claude-opus-47", name: "Claude Opus 4.7",   org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "claude-sonnet-46",name:"Claude Sonnet 4.6", org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", score: 69.2,
+    { id: "claude-opus-47",  name: "Claude Opus 4.7",   org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", score: 69.5,
+      perMetric: { syntax: 100.0, runtime: 66.7, conformance: 60.0, invariant: 51.3 },
+      perTask: { spin: 100, mutex: 25, rwmutex: 97.5, ringbuf: 100, locksvc: 79.2, xline: 25, raftkvs: 88.3, redis: 25, zk: 33.3, etcd: 91.2, dqueue: 100 } },
+    { id: "claude-sonnet-46",name: "Claude Sonnet 4.6", org: "Anthropic", logo: "assets/logos/claude-color.svg",   ctx: "TODO", score: 69.2,
       perMetric: { syntax: 100.0, runtime: 77.0, conformance: 44.2, invariant: 55.6 },
       perTask: { spin: 100, mutex: 92.9, rwmutex: 95, ringbuf: 75, locksvc: 79.2, xline: 25, raftkvs: 66.7, redis: 25, zk: 82.6, etcd: 45, dqueue: 75 } },
-    { id: "gemini-31-pro",  name: "Gemini 3.1 Pro",    org: "Google",    logo: "assets/logos/gemini-color.svg",   ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "grok-4",         name: "Grok 4",            org: "xAI",       logo: "assets/logos/grok.svg",           ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "deepseek-v32",   name: "DeepSeek V3.2",     org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", score: 38.2,
+    { id: "grok-4",          name: "Grok 4",            org: "xAI",       logo: "assets/logos/grok.svg",           ctx: "TODO", score: 65.4,
+      perMetric: { syntax: 95.5, runtime: 64.5, conformance: 50.6, invariant: 51.0 },
+      perTask: { spin: 87.5, mutex: 96.4, rwmutex: 97.5, ringbuf: 75, locksvc: 25, xline: 88.1, raftkvs: 12.5, redis: 25, zk: 75, etcd: 37.5, dqueue: 100 } },
+    { id: "kimi-k25",        name: "Kimi K2.5",         org: "Moonshot",  logo: "assets/logos/moonshot.svg",       ctx: "TODO", score: 60.3,
+      perMetric: { syntax: 100.0, runtime: 64.8, conformance: 43.9, invariant: 32.5 },
+      perTask: { spin: 64.3, mutex: 96.4, rwmutex: 75, ringbuf: 75, locksvc: 79.8, xline: 70.8, raftkvs: 25, redis: 40.2, zk: 87.1, etcd: 25, dqueue: 25 } },
+    { id: "gpt-5-2",         name: "GPT-5.2",           org: "OpenAI",    logo: "assets/logos/openai.svg",         ctx: "TODO", score: 39.5,
+      perMetric: { syntax: 75.6, runtime: 30.0, conformance: 27.3, invariant: 25.1 },
+      perTask: { spin: 100, mutex: 96.4, rwmutex: 97.5, ringbuf: 32.5, locksvc: 12.5, xline: 25, raftkvs: 11.7, redis: 10.6, zk: 25, etcd: 11.3, dqueue: 11.9 } },
+    { id: "deepseek-v32",    name: "DeepSeek V3.2",     org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", score: 38.2,
       perMetric: { syntax: 70.2, runtime: 36.4, conformance: 24.2, invariant: 22.1 },
       perTask: { spin: 92.9, mutex: 84.5, rwmutex: 11.3, ringbuf: 100, locksvc: 11.8, xline: 10.7, raftkvs: 11.7, redis: 11.3, zk: 25, etcd: 11.3, dqueue: 50 } },
-    { id: "deepseek-r1",    name: "DeepSeek R1",       org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "qwen3-6-plus",   name: "Qwen3.6 Plus",      org: "Alibaba",   logo: "assets/logos/qwen-color.svg",     ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "kimi-k25",       name: "Kimi K2.5",         org: "Moonshot",  logo: "assets/logos/moonshot.svg",       ctx: "TODO", score: 61.1,
-      perMetric: { syntax: 100.0, runtime: 64.8, conformance: 43.9, invariant: 32.5 },
-      perTask: { spin: 64.3, mutex: 96.4, rwmutex: 75, ringbuf: 75, locksvc: 79.8, xline: 70.8, raftkvs: 25, redis: 40.2, zk: 87.1, etcd: 33.3, dqueue: 25 } },
-    { id: "glm-51",         name: "GLM 5.1",           org: "Zhipu",     logo: "assets/logos/zhipu-color.svg",    ctx: "TODO", score: null, perMetric: {}, perTask: {} },
-    { id: "minimax-m27",    name: "MiniMax-M2.7",      org: "MiniMax",   logo: "assets/logos/minimax-color.svg",  ctx: "TODO", score: null, perMetric: {}, perTask: {} }
+    { id: "deepseek-r1",     name: "DeepSeek R1",       org: "DeepSeek",  logo: "assets/logos/deepseek-color.svg", ctx: "TODO", score: null, perMetric: {}, perTask: {} },
+    { id: "qwen3-6-plus",    name: "Qwen3.6 Plus",      org: "Alibaba",   logo: "assets/logos/qwen-color.svg",     ctx: "TODO", score: null, perMetric: {}, perTask: {} },
+    { id: "glm-51",          name: "GLM 5.1",           org: "Zhipu",     logo: "assets/logos/zhipu-color.svg",    ctx: "TODO", score: null, perMetric: {}, perTask: {} },
+    { id: "minimax-m27",     name: "MiniMax-M2.7",      org: "MiniMax",   logo: "assets/logos/minimax-color.svg",  ctx: "TODO", score: null, perMetric: {}, perTask: {} }
   ],
 
   bibtex: `@inproceedings{cheng2026sysmobench,

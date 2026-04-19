@@ -52,10 +52,10 @@ function PageHome({ go }) {
             <div style={{ display: "flex", gap: 10, justifyContent: "center", marginTop: 28, flexWrap: "wrap" }}>
               <a className="btn accent" href="https://arxiv.org/pdf/2509.23130" target="_blank">Read the Paper</a>
               <button className="btn primary" onClick={() => go("leaderboard")}>View Leaderboard</button>
-              <a className="btn ghost" href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub ↗</a>
+              <a className="btn ghost" href="https://github.com/specula-org/SysMoBench" target="_blank">GitHub</a>
             </div>
             <div className="stats">
-              <div><span className="big"><CountUp to={11} /></span>system artifacts</div>
+              <div><span className="big"><CountUp to={SMB_DATA.tasks.length} /></span>system artifacts</div>
               <div><span className="big"><CountUp to={9} /></span>automated metrics</div>
               <div><span className="big accent">TLA+</span><span className="sub-dim">Alloy · PAT</span></div>
             </div>
@@ -68,7 +68,7 @@ function PageHome({ go }) {
           <Reveal delay={120}>
             <span className="eyebrow">Abstract</span>
             <p style={{ fontFamily: "var(--serif)", fontSize: 18, lineHeight: 1.75, color: "var(--ink)", marginTop: 16, textWrap: "pretty" }}>
-              {SMB_DATA.paper.abstract}
+              {SMB_DATA.paper.abstract.replace("{NUM_SYSTEMS}", SMB_DATA.tasks.length)}
             </p>
           </Reveal>
         </div>
@@ -251,7 +251,7 @@ function PageCite() {
     <section className="section">
       <div className="wrap-narrow">
 
-        <FadeIn delay={280}>
+        <FadeIn>
           <h2 style={{ fontSize: 28 }}>Contribute</h2>
           <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
             Want to see more models on the leaderboard? Email <a className="link" href="mailto:cq@smail.nju.edu.cn">cq@smail.nju.edu.cn</a> or open a pull request on our GitHub repository.
@@ -261,12 +261,12 @@ function PageCite() {
             We also welcome other contributions — new system artifacts, evaluation metrics, documentation improvements, or bug reports. Feel free to open an issue or reach out to discuss your ideas.
           </p>
           <div style={{ display: "flex", gap: 10, marginTop: 20 }}>
-            <a className="btn primary" href="https://github.com/specula-org/SysMoBench" target="_blank">Open a PR ↗</a>
+            <a className="btn primary" href="https://github.com/specula-org/SysMoBench" target="_blank">Open a PR</a>
             <a className="btn ghost" href="mailto:cq@smail.nju.edu.cn">Email us</a>
           </div>
         </FadeIn>
 
-        <FadeIn>
+        <FadeIn delay={160}>
           <hr className="sep" />
           <h2 style={{ fontSize: 28 }}>Cite</h2>
           <p style={{ fontFamily: "var(--serif)", fontSize: 17, lineHeight: 1.7, color: "var(--ink-2)" }}>
@@ -274,7 +274,7 @@ function PageCite() {
           </p>
         </FadeIn>
 
-        <FadeIn delay={160}>
+        <FadeIn delay={280}>
           <div className="card bibbox" style={{ padding: 0, marginTop: 28, overflow: "hidden" }}>
             <div style={{
               display: "flex",
