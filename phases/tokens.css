@@ -1,6 +1,5 @@
 /* Shared tokens for SysMoBench phase banners.
-   Scoped under .phase-host so they don't override the host site's tokens.
-   Only the additional vars that hub.css doesn't already provide. */
+   Scoped under .phase-host so they don't override the host site's tokens. */
 .phase-host {
   --accent-deep: #2f6690;
   --accent-soft: rgba(79, 140, 255, 0.18);
@@ -20,12 +19,24 @@
 
 .phase-host * { box-sizing: border-box; }
 .phase-host .banner {
-  width: 100%;
+  width: 1078px;
+  height: 308px;
   background: var(--paper);
   font-family: var(--sans);
   color: var(--ink);
   position: relative;
-  border: 1px solid var(--line-soft);
-  border-radius: 12px;
   overflow: hidden;
+}
+
+.phase-fit {
+  width: 100%;
+  overflow: hidden;
+  border-radius: 12px;
+  border: 1px solid var(--line-soft);
+  background: var(--paper);
+}
+
+.phase-fit .phase-fit-inner {
+  width: 1078px;
+  transform-origin: 0 0;
 }

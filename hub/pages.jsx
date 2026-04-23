@@ -1,14 +1,42 @@
 /* global React, SMB_DATA, HubLeaderboard, Reveal, CountUp, FadeIn, OrgDot, AnimBar, APhase1, APhase2, APhase3, APhase4 */
 const { useState: useS_p, useEffect: useE_p, useRef: useR_p } = React;
+const PHASE_NATIVE_WIDTH = 1078;
+const PHASE_NATIVE_HEIGHT = 308;
 
 function PhaseBanner({ phase }) {
+  const wrapRef = useR_p(null);
+  const [scale, setScale] = useS_p(1);
   const Comp = (typeof window !== 'undefined') && [null, window.APhase1, window.APhase2, window.APhase3, window.APhase4][phase];
+
+  useE_p(() => {
+    if (!wrapRef.current) return undefined;
+
+    const update = () => {
+      const width = wrapRef.current && wrapRef.current.clientWidth;
+      if (width > 0) setScale(width / PHASE_NATIVE_WIDTH);
+    };
+
+    update();
+    if (typeof ResizeObserver !== "undefined") {
+      const ro = new ResizeObserver(update);
+      ro.observe(wrapRef.current);
+      return () => ro.disconnect();
+    }
+
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, []);
+
   if (!Comp) {
-    return <div className="fig-placeholder" style={{ height: 200 }}>[ phase diagram loading… ]</div>;
+    return <div className="fig-placeholder" style={{ height: PHASE_NATIVE_HEIGHT }}>[ phase diagram loading… ]</div>;
   }
   return (
     <div className="phase-host">
-      <Comp />
+      <div ref={wrapRef} className="phase-fit" style={{ height: PHASE_NATIVE_HEIGHT * scale }}>
+        <div className="phase-fit-inner" style={{ transform: `scale(${scale})` }}>
+          <Comp />
+        </div>
+      </div>
     </div>
   );
 }
