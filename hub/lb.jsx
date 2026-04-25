@@ -1,5 +1,5 @@
 /* global React, SMB_DATA, useReveal, AnimBar */
-const { useState: useS_lb, useMemo: useM_lb } = React;
+const { useState: useS_lb, useMemo: useM_lb, useRef: useR_lb, useLayoutEffect: useLE_lb } = React;
 
 function OrgDot({ org, logo }) {
   const [failed, setFailed] = useS_lb(false);
@@ -41,10 +41,47 @@ function HubLeaderboard({ showFilters = true }) {
     return arr;
   }, [sort, orgFilter]);
 
-  const onSort = (key) => setSort(s => ({ key, dir: s.key === key && s.dir === "desc" ? "asc" : "desc" }));
+  const onSort = (key) => {
+    setExpanded(null); // collapse so FLIP positions stay clean
+    setSort(s => ({ key, dir: s.key === key && s.dir === "desc" ? "asc" : "desc" }));
+  };
   const arrow = (k) => (sort.key !== k ? "↕" : sort.dir === "desc" ? "↓" : "↑");
   const scoredModels = SMB_DATA.models.filter(m => m.score != null);
   const maxScore = Math.max(...scoredModels.map(m => m.score));
+
+  // FLIP: smoothly slide rows to their new positions when sort/filter changes.
+  const rowRefs = useR_lb({});
+  const positionsRef = useR_lb({});
+  const lastKeyRef = useR_lb({ k: sort.key, d: sort.dir, f: orgFilter });
+  useLE_lb(() => {
+    const oldPositions = positionsRef.current;
+    const newPositions = {};
+    const refs = rowRefs.current;
+    Object.keys(refs).forEach(id => {
+      const el = refs[id];
+      if (el) newPositions[id] = el.offsetTop;
+    });
+    const lk = lastKeyRef.current;
+    const sortChanged = lk.k !== sort.key || lk.d !== sort.dir || lk.f !== orgFilter;
+    if (sortChanged && Object.keys(oldPositions).length > 0) {
+      Object.keys(refs).forEach(id => {
+        const el = refs[id];
+        if (!el) return;
+        const oldTop = oldPositions[id];
+        const newTop = newPositions[id];
+        if (oldTop != null && oldTop !== newTop) {
+          const delta = oldTop - newTop;
+          el.style.transition = "none";
+          el.style.transform = `translateY(${delta}px)`;
+          el.offsetHeight; // force reflow so the no-transition transform commits
+          el.style.transition = "transform 480ms cubic-bezier(0.22, 1, 0.36, 1)";
+          el.style.transform = "";
+        }
+      });
+    }
+    positionsRef.current = newPositions;
+    lastKeyRef.current = { k: sort.key, d: sort.dir, f: orgFilter };
+  });
 
   return (
     <div>
@@ -100,6 +137,7 @@ function HubLeaderboard({ showFilters = true }) {
               return (
                 <React.Fragment key={m.id}>
                   <tr
+                    ref={el => { if (el) rowRefs.current[m.id] = el; else delete rowRefs.current[m.id]; }}
                     className={isOpen ? "expanded" : ""}
                     onClick={() => !m.placeholder && setExpanded(isOpen ? null : m.id)}
                     style={m.placeholder ? { opacity: 0.55, cursor: "default" } : {}}
