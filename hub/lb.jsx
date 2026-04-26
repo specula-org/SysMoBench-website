@@ -45,7 +45,9 @@ function HubLeaderboard({ showFilters = true }) {
     setExpanded(null); // collapse so FLIP positions stay clean
     setSort(s => ({ key, dir: s.key === key && s.dir === "desc" ? "asc" : "desc" }));
   };
-  const arrow = (k) => (sort.key !== k ? "↕" : sort.dir === "desc" ? "↓" : "↑");
+  const sortCls = (k) => sort.key === k
+    ? "sorted" + (sort.dir === "asc" ? " sorted-asc" : "")
+    : "";
   const scoredModels = SMB_DATA.models.filter(m => m.score != null);
   const maxScore = Math.max(...scoredModels.map(m => m.score));
 
@@ -111,23 +113,23 @@ function HubLeaderboard({ showFilters = true }) {
           <thead>
             <tr>
               <th className="rank">#</th>
-              <th className={sort.key === "name" ? "sorted" : ""} onClick={() => onSort("name")}>Model <span className="sort">{arrow("name")}</span></th>
+              <th className={sortCls("name")} onClick={() => onSort("name")}>Model <span className="sort">↓</span></th>
               {SMB_DATA.metrics.map((mt, mi) => {
                 const k = "metric:" + mt.id;
                 const label = mt.name.replace(/ Correctness$/, "");
                 return (
                   <th
                     key={mt.id}
-                    className={sort.key === k ? "sorted" : ""}
+                    className={sortCls(k)}
                     onClick={() => onSort(k)}
                     style={{ textAlign: "right" }}
                     title={`Phase ${mi + 1} · ${mt.name}`}
                   >
-                    {label} <span className="sort">{arrow(k)}</span>
+                    {label} <span className="sort">↓</span>
                   </th>
                 );
               })}
-              <th className={sort.key === "score" ? "sorted" : ""} onClick={() => onSort("score")} style={{ textAlign: "right" }}>Score <span className="sort">{arrow("score")}</span></th>
+              <th className={sortCls("score")} onClick={() => onSort("score")} style={{ textAlign: "right" }}>Score <span className="sort">↓</span></th>
               <th style={{ width: 32 }}></th>
             </tr>
           </thead>
