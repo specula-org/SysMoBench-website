@@ -301,6 +301,13 @@ table.lb tr.expand-row > td {
 .rank-medal.silver { background: #8e9aa6; }
 .rank-medal.bronze { background: #a66a39; }
 .modelname { font-weight: 600; font-size: 15px; display: flex; align-items: center; gap: 10px; }
+.modelname-text { display: flex; flex-direction: column; line-height: 1.25; min-width: 0; }
+.modelname-main { font-weight: 600; }
+.modelname-sub {
+  font-family: var(--mono); font-size: 10.5px; font-weight: 400;
+  color: var(--ink-3); letter-spacing: 0.02em;
+  margin-top: 2px;
+}
 .logo-dot {
   width: 26px; height: 26px; border-radius: 6px; flex-shrink: 0;
   display: inline-flex; align-items: center; justify-content: center;
@@ -557,6 +564,11 @@ hr.sep { border: none; border-top: 1px solid var(--line-soft); margin: 40px 0; }
 .logo-dot.deepseek { background: #1d4ed8; color: #fff; border-color: #1d4ed8; }
 .logo-dot.meta { background: #0467df; color: #fff; border-color: #0467df; }
 .logo-dot.alibaba { background: #ff6a00; color: #fff; border-color: #ff6a00; }
+.logo-dot.specula {
+  background: linear-gradient(135deg, var(--accent), var(--ink));
+  color: #fff;
+  border-color: transparent;
+}
 
 @media (max-width: 900px) {
   .highlight-grid, .task-grid, .taskbars { grid-template-columns: 1fr 1fr; }

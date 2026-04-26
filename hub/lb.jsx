@@ -3,7 +3,7 @@ const { useState: useS_lb, useMemo: useM_lb, useRef: useR_lb, useLayoutEffect: u
 
 function OrgDot({ org, logo }) {
   const [failed, setFailed] = useS_lb(false);
-  const map = { OpenAI: "openai", Anthropic: "anthropic", Google: "google", DeepSeek: "deepseek", Meta: "meta", Alibaba: "alibaba", xAI: "xai", MiniMax: "minimax", Moonshot: "moonshot", Zhipu: "zhipu" };
+  const map = { OpenAI: "openai", Anthropic: "anthropic", Google: "google", DeepSeek: "deepseek", Meta: "meta", Alibaba: "alibaba", xAI: "xai", MiniMax: "minimax", Moonshot: "moonshot", Zhipu: "zhipu", Specula: "specula" };
   const cls = map[org] || "";
   const letter = (org || "?").slice(0, 1);
   if (logo && !failed) {
@@ -20,7 +20,7 @@ function HubLeaderboard({ showFilters = true }) {
   const [sort, setSort] = useS_lb({ key: "score", dir: "desc" });
   const [expanded, setExpanded] = useS_lb(null);
   const [orgFilter, setOrgFilter] = useS_lb("All");
-  const [method, setMethod] = useS_lb("llm_only");
+  const [kindFilter, setKindFilter] = useS_lb("All");
 
   const orgs = ["All", ...new Set(SMB_DATA.models.filter(m => !m.placeholder).map(m => m.org))];
 
@@ -28,6 +28,7 @@ function HubLeaderboard({ showFilters = true }) {
 
   const rows = useM_lb(() => {
     let arr = SMB_DATA.models.filter(m => orgFilter === "All" || m.org === orgFilter || m.placeholder);
+    arr = arr.filter(m => kindFilter === "All" || m.kind === kindFilter || m.placeholder);
     arr = [...arr];
     arr.sort((a, b) => {
       if (a.placeholder) return 1;
@@ -39,7 +40,7 @@ function HubLeaderboard({ showFilters = true }) {
       return sort.dir === "asc" ? va - vb : vb - va;
     });
     return arr;
-  }, [sort, orgFilter]);
+  }, [sort, orgFilter, kindFilter]);
 
   const onSort = (key) => {
     setExpanded(null); // collapse so FLIP positions stay clean
@@ -54,7 +55,7 @@ function HubLeaderboard({ showFilters = true }) {
   // FLIP: smoothly slide rows to their new positions when sort/filter changes.
   const rowRefs = useR_lb({});
   const positionsRef = useR_lb({});
-  const lastKeyRef = useR_lb({ k: sort.key, d: sort.dir, f: orgFilter });
+  const lastKeyRef = useR_lb({ k: sort.key, d: sort.dir, f: orgFilter, kd: kindFilter });
   useLE_lb(() => {
     const oldPositions = positionsRef.current;
     const newPositions = {};
@@ -64,7 +65,7 @@ function HubLeaderboard({ showFilters = true }) {
       if (el) newPositions[id] = el.offsetTop;
     });
     const lk = lastKeyRef.current;
-    const sortChanged = lk.k !== sort.key || lk.d !== sort.dir || lk.f !== orgFilter;
+    const sortChanged = lk.k !== sort.key || lk.d !== sort.dir || lk.f !== orgFilter || lk.kd !== kindFilter;
     if (sortChanged && Object.keys(oldPositions).length > 0) {
       Object.keys(refs).forEach(id => {
         const el = refs[id];
@@ -82,7 +83,7 @@ function HubLeaderboard({ showFilters = true }) {
       });
     }
     positionsRef.current = newPositions;
-    lastKeyRef.current = { k: sort.key, d: sort.dir, f: orgFilter };
+    lastKeyRef.current = { k: sort.key, d: sort.dir, f: orgFilter, kd: kindFilter };
   });
 
   return (
@@ -101,9 +102,10 @@ function HubLeaderboard({ showFilters = true }) {
             </button>
           ))}
           <div className="method-select-wrap">
-            <select className="method-select" value={method} onChange={e => setMethod(e.target.value)}>
-              <option value="llm_only">LLM-Only</option>
-              <option value="agent" disabled>Agent (coming soon)</option>
+            <select className="method-select" value={kindFilter} onChange={e => setKindFilter(e.target.value)}>
+              <option value="All">All</option>
+              <option value="base">LLM-Only</option>
+              <option value="agent">Agent</option>
             </select>
           </div>
         </div>
@@ -151,7 +153,15 @@ function HubLeaderboard({ showFilters = true }) {
                           ? <span className={"rank-medal " + ["gold", "silver", "bronze"][i]}>{i + 1}</span>
                           : i + 1
                     }</span></td>
-                    <td><div className="modelname"><OrgDot org={m.org} logo={m.logo} />{m.name}</div></td>
+                    <td>
+                      <div className="modelname">
+                        <OrgDot org={m.org} logo={m.logo} />
+                        <div className="modelname-text">
+                          <div className="modelname-main">{m.name}</div>
+                          {m.subname && <div className="modelname-sub">{m.subname}</div>}
+                        </div>
+                      </div>
+                    </td>
                     {SMB_DATA.metrics.map(mt => {
                       const v = m.perMetric?.[mt.id];
                       return (
