@@ -7,8 +7,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,400;0,500;0,600;1,400&family=JetBrains+Mono:wght@400;500;600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="hub/hub.css?v=24" />
-<link rel="stylesheet" href="phases/tokens.css?v=24" />
+<link rel="stylesheet" href="hub/hub.css?v=25" />
+<link rel="stylesheet" href="phases/tokens.css?v=25" />
 </head>
 <body>
   <div id="root"></div>
@@ -24,11 +24,11 @@
     }/*EDITMODE-END*/;
   </script>
 
-  <script src="data.js?v=24"></script>
-  <script type="text/babel" src="hub/anim.jsx?v=24"></script>
-  <script type="text/babel" src="hub/lb.jsx?v=24"></script>
-  <script type="text/babel" src="phases/style-a-academic.jsx?v=24"></script>
-  <script type="text/babel" src="hub/pages.jsx?v=24"></script>
+  <script src="data.js?v=25"></script>
+  <script type="text/babel" src="hub/anim.jsx?v=25"></script>
+  <script type="text/babel" src="hub/lb.jsx?v=25"></script>
+  <script type="text/babel" src="phases/style-a-academic.jsx?v=25"></script>
+  <script type="text/babel" src="hub/pages.jsx?v=25"></script>
 
   <script type="text/babel" data-presets="env,react">
     const { useState, useEffect } = React;
@@ -51,28 +51,32 @@
               <Mark size={26} />
               <span className="nav-brand-name">SysMoBench</span>
             </div>
-            <button
-              className="nav-toggle"
-              aria-label="Toggle menu"
-              aria-expanded={navOpen}
-              onClick={() => setNavOpen(o => !o)}
-            >
-              <span /><span /><span />
-            </button>
-            <div className="nav-links">
-              {links.map(l => (
-                <a key={l.id} className={"nav-link" + (route === l.id ? " active" : "")} onClick={() => navigate(l.id)}>{l.label}</a>
-              ))}
-              <button
-                className="theme-toggle"
-                title={tweaks.dark ? "Switch to light" : "Switch to dark"}
-                onClick={() => update({ dark: !tweaks.dark })}
-              >
-                {tweaks.dark ? "☀" : "☾"}
-              </button>
-              <a className="nav-cta" href="https://github.com/specula-org/SysMoBench" target="_blank" style={{marginLeft:8}} onClick={() => setNavOpen(false)}>
-                GitHub
-              </a>
+            <div className="nav-right">
+              <div className="nav-links">
+                {links.map(l => (
+                  <a key={l.id} className={"nav-link" + (route === l.id ? " active" : "")} onClick={() => navigate(l.id)}>{l.label}</a>
+                ))}
+                <a className="nav-cta" href="https://github.com/specula-org/SysMoBench" target="_blank" onClick={() => setNavOpen(false)}>
+                  GitHub
+                </a>
+              </div>
+              <div className="nav-actions">
+                <button
+                  className="theme-toggle"
+                  title={tweaks.dark ? "Switch to light" : "Switch to dark"}
+                  onClick={() => update({ dark: !tweaks.dark })}
+                >
+                  {tweaks.dark ? "☀" : "☾"}
+                </button>
+                <button
+                  className="nav-toggle"
+                  aria-label="Toggle menu"
+                  aria-expanded={navOpen}
+                  onClick={() => setNavOpen(o => !o)}
+                >
+                  <span /><span /><span />
+                </button>
+              </div>
             </div>
           </div>
         </div>

@@ -56,7 +56,10 @@ a.link:hover { text-decoration: underline; }
 }
 .nav-brand { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .nav-brand-name { font-family: var(--serif); font-weight: 600; font-size: 18px; letter-spacing: -0.01em; }
+.nav-right { display: flex; align-items: center; gap: 12px; }
+.nav-actions { display: flex; align-items: center; gap: 6px; }
 .nav-links { display: flex; gap: 4px; align-items: center; }
+.nav-links .nav-cta { margin-left: 8px; }
 .nav-link {
   font-size: 13px; font-weight: 500; padding: 8px 14px;
   color: var(--ink-2); border-radius: 6px; cursor: pointer;
@@ -75,7 +78,6 @@ a.link:hover { text-decoration: underline; }
 .nav-cta:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 .theme-toggle {
-  margin-left: 4px;
   width: 32px; height: 32px;
   display: inline-flex; align-items: center; justify-content: center;
   border-radius: 6px;
@@ -714,6 +716,5 @@ hr.sep { border: none; border-top: 1px solid var(--line-soft); margin: 40px 0; }
     pointer-events: auto;
   }
   .nav-link { padding: 10px 12px; font-size: 15px; }
-  .theme-toggle { margin-left: 0; align-self: flex-start; }
-  .nav-cta { margin-left: 0 !important; justify-content: center; }
+  .nav-links .nav-cta { margin-left: 0; justify-content: center; }
 }
