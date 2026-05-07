@@ -249,7 +249,9 @@ p.lead { font-family: var(--serif); font-size: 20px; line-height: 1.6; color: va
 .lb-wrap {
   border: 1px solid var(--line-soft);
   border-radius: 12px;
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
+  -webkit-overflow-scrolling: touch;
   background: var(--paper);
 }
 table.lb {
@@ -717,4 +719,21 @@ hr.sep { border: none; border-top: 1px solid var(--line-soft); margin: 40px 0; }
   }
   .nav-link { padding: 10px 12px; font-size: 15px; }
   .nav-links .nav-cta { margin-left: 0; justify-content: center; }
+
+  /* leaderboard: enable horizontal scrolling so all columns are reachable */
+  table.lb { min-width: 720px; }
+  table.lb th, table.lb td { padding: 12px 14px; }
+  .scorecell .bar { width: 56px; }
+  .wrap { padding: 0 20px; }
+  .wrap-narrow { padding: 0 20px; }
+}
+
+@media (max-width: 600px) {
+  /* single-column for tight phones so 11 system cards fit and stay readable */
+  .highlight-grid, .task-grid, .taskbars { grid-template-columns: 1fr; }
+  .taskbar { grid-template-columns: 90px 1fr 36px; }
+  .hero { padding: 64px 0 40px; }
+  h1 { font-size: 32px; }
+  .stats { gap: 24px; }
+  .stats .big { font-size: 32px; }
 }
