@@ -76,6 +76,33 @@ window.SMB_DATA = {
       perTask: { spin: 72.5, mutex: 30.4, rwmutex: 49.6, ringbuf: 82.5, locksvc: 36.7, xline: 44.2, raftkvs: 24.7, redis: 30.4, zk: 22.5, etcd: 21.5, dqueue: 15 } }
   ],
 
+  coverage: [
+    {
+      url: "https://www.sigops.org/2026/can-llms-model-real-world-systems-in-tla/",
+      source: "SIGOPS Blog",
+      title: "Can LLMs Model Real-World Systems in TLA+?",
+      author: "Qian Cheng et al.",
+      date: "May 7, 2026",
+      image: "https://www.sigops.org/wp-content/uploads/2026/05/sysmobench-1672x941.jpg"
+    },
+    {
+      url: "https://muratbuffalo.blogspot.com/2026/03/sysmobench-evaluating-ai-on-formally.html",
+      source: "Metadata (Murat's Blog)",
+      title: "SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems",
+      author: "Murat Demirbas",
+      date: "March 24, 2026",
+      image: "https://blogger.googleusercontent.com/img/a/AVvXsEh00AUKLYM5zrf8Qu90uuXd_G2va7y1YagEiCU8dkk5NY6kn0VRk_faRjLA8mOnS8eU8pUfS4JN0D53i7sw2pUcWT8LLsIPonN1CevMeqUH7VbGGjumico0Klpj7BrHofcaKgL0nG5JaMJIiQu7-huiWoKAfeCg65pZVw0kh9vwCsEKrcaK__qAujuClvE=w640-h208"
+    },
+    {
+      url: "https://emptysqua.re/blog/review-sysmobench/",
+      source: "emptysqua.re",
+      title: "Review: SysMoBench — Evaluating AI on Formally Modeling Complex Real-World Systems",
+      author: "A. Jesse Jiryu Davis",
+      date: "April 1, 2026",
+      image: "https://emptysqua.re/blog/review-sysmobench/tumblr_14f09c2a443b1ad76250915aae60833f_08062ea2_1280.jpg"
+    }
+  ],
+
   bibtex: `@inproceedings{cheng2026sysmobench,
   title     = {SysMoBench: Evaluating AI on Formally Modeling Complex Real-World Systems},
   author    = {Cheng, Qian and Tang, Ruize and Ma, Emilie and Hackett, Finn and

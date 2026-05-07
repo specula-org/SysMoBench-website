@@ -102,6 +102,46 @@ function PageHome({ go }) {
         </div>
       </section>
 
+      {SMB_DATA.coverage && SMB_DATA.coverage.length > 0 && (
+        <section className="section-tight">
+          <div className="wrap">
+            <Reveal>
+              <div style={{ textAlign: "center", marginBottom: 32 }}>
+                <span className="eyebrow accent">In the Press</span>
+                <h2 style={{ fontSize: 28, marginTop: 10 }}>Coverage &amp; Reviews</h2>
+              </div>
+            </Reveal>
+            <Reveal delay={80}>
+              <div className="coverage-grid">
+                {SMB_DATA.coverage.map((c) => (
+                  <a
+                    key={c.url}
+                    className="coverage-card"
+                    href={c.url}
+                    target="_blank"
+                    rel="noopener"
+                  >
+                    <div className="coverage-thumb">
+                      <img src={c.image} alt="" loading="lazy" />
+                    </div>
+                    <div className="coverage-body">
+                      <div className="coverage-source">{c.source}</div>
+                      <h3 className="coverage-title">{c.title}</h3>
+                      <div className="coverage-meta">
+                        <span>{c.author}</span>
+                        <span className="coverage-dot" aria-hidden="true">·</span>
+                        <span>{c.date}</span>
+                      </div>
+                      <span className="coverage-cta">Read <span className="ar">→</span></span>
+                    </div>
+                  </a>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      )}
+
       <section className="section">
         <div className="wrap">
           <Reveal delay={80}>

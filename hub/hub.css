@@ -570,7 +570,94 @@ hr.sep { border: none; border-top: 1px solid var(--line-soft); margin: 40px 0; }
   border-color: transparent;
 }
 
+/* ---------- coverage / press ---------- */
+.coverage-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  margin-top: 8px;
+}
+.coverage-card {
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border: 1px solid var(--line-soft);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 250ms, border-color 250ms, box-shadow 250ms;
+}
+.coverage-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--line);
+  box-shadow: 0 8px 24px -8px rgba(20, 32, 43, 0.1);
+}
+[data-theme="dark"] .coverage-card:hover { box-shadow: 0 8px 24px -8px rgba(0,0,0,0.5); }
+.coverage-thumb {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--paper-2);
+  overflow: hidden;
+  border-bottom: 1px solid var(--line-soft);
+}
+.coverage-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 400ms;
+}
+.coverage-card:hover .coverage-thumb img { transform: scale(1.03); }
+.coverage-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 18px 20px 20px;
+  flex: 1;
+}
+.coverage-source {
+  font-family: var(--mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.coverage-title {
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.35;
+  margin: 0;
+  color: var(--ink);
+  /* clamp to 3 lines so cards stay even */
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.coverage-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12.5px;
+  color: var(--ink-3);
+}
+.coverage-meta .coverage-dot { opacity: 0.6; }
+.coverage-cta {
+  margin-top: auto;
+  padding-top: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--accent);
+}
+.coverage-cta .ar { display: inline-block; transition: transform 250ms; }
+.coverage-card:hover .coverage-cta .ar { transform: translateX(4px); }
+
 @media (max-width: 900px) {
+  .coverage-grid { grid-template-columns: 1fr; }
   .highlight-grid, .task-grid, .taskbars { grid-template-columns: 1fr 1fr; }
   h1 { font-size: 40px; }
   h2 { font-size: 28px; }
