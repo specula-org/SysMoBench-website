@@ -142,31 +142,6 @@ function PageHome({ go }) {
         </section>
       )}
 
-      <section className="section">
-        <div className="wrap">
-          <Reveal delay={80}>
-            <div style={{ textAlign: "center", marginBottom: 40 }}>
-              <span className="eyebrow accent">Explore</span>
-            </div>
-          </Reveal>
-          <Reveal>
-            <div className="highlight-grid">
-              {[
-                { route: "leaderboard", eyebrow: "Results", title: "Leaderboard", desc: "The performance and cost of each LLM" },
-                { route: "systems", eyebrow: "Benchmark", title: "Systems & Metrics", desc: "Real-world systems evaluated across four automated phases." },
-                { route: "cite", eyebrow: "Use it", title: "Contribute", desc: "Contribute to our leaderboard." }
-              ].map(c => (
-                <div key={c.route} className="highlight-card" onClick={() => go(c.route)}>
-                  <span className="eyebrow accent" style={{ marginBottom: 12 }}>{c.eyebrow}</span>
-                  <h3>{c.title}</h3>
-                  <p>{c.desc}</p>
-                  <span className="arrow">Open <span className="ar">→</span></span>
-                </div>
-              ))}
-            </div>
-          </Reveal>
-        </div>
-      </section>
     </div>
   );
 }
