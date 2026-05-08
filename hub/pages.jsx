@@ -108,7 +108,6 @@ function PageHome({ go }) {
             <Reveal>
               <div style={{ textAlign: "center", marginBottom: 32 }}>
                 <span className="eyebrow accent">In the Press</span>
-                <h2 style={{ fontSize: 28, marginTop: 10 }}>Coverage &amp; Reviews</h2>
               </div>
             </Reveal>
             <Reveal delay={80}>
